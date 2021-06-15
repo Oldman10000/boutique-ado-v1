@@ -29,6 +29,7 @@ def checkout(request):
             'county': request.POST['county'],
         }
         order_form = OrderForm(form_data)
+
         if order_form.is_valid():
             order = order_form.save()
             for item_id, item_data in bag.items():
@@ -63,6 +64,7 @@ def checkout(request):
         else:
             messages.error(request, 'There was an error with your form. \
                 Please double check your information.')
+            return redirect(reverse('checkout'))
     else:
         bag = request.session.get('bag', {})
         if not bag:
